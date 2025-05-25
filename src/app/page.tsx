@@ -6,6 +6,7 @@ import { Player, MatchWithResults } from "@/types/database";
 import LeagueTable from "@/components/LeagueTable";
 import MatchEntry from "@/components/MatchEntry";
 import MatchHistory from "@/components/MatchHistory";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Home() {
   const [players, setPlayers] = useState<Player[]>([]);
@@ -67,32 +68,35 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen flex items-center justify-center bg-[var(--background)]">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[var(--accent-blue)]"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        <header className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+    <div className="min-h-screen bg-[var(--background)]">
+      <div className="container mx-auto px-4 py-4 sm:py-8">
+        <header className="text-center mb-6 sm:mb-8 relative">
+          <div className="absolute right-0 top-0">
+            <ThemeToggle />
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-bold text-[var(--text-primary)] mb-2">
             Card Game League
           </h1>
-          <p className="text-gray-600">
+          <p className="text-[var(--text-secondary)]">
             Track your game results and see who&apos;s leading!
           </p>
         </header>
 
-        <div className="grid gap-8 lg:grid-cols-2">
+        <div className="grid gap-4 sm:gap-6 md:gap-8 grid-cols-1 md:grid-cols-2">
           {/* League Table */}
-          <div className="lg:col-span-2">
+          <div className="md:col-span-2">
             <LeagueTable players={players} />
           </div>
 
           {/* Match Entry */}
-          <div>
+          <div className="w-full">
             <MatchEntry
               players={players}
               onMatchSubmitted={handleMatchSubmitted}
@@ -100,7 +104,7 @@ export default function Home() {
           </div>
 
           {/* Match History */}
-          <div>
+          <div className="w-full">
             <MatchHistory matches={matches} />
           </div>
         </div>

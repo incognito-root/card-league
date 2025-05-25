@@ -139,19 +139,19 @@ export default function MatchEntry({ players, onMatchSubmitted }: MatchEntryProp
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-bold text-gray-900 mb-4">Record Match Result</h2>
+    <div className="bg-[var(--card-bg)] rounded-lg shadow-md p-4 sm:p-6 border border-[var(--card-border)]">
+      <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)] mb-3 sm:mb-4">Record Match Result</h2>
       
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         {['1st Place (5 pts)', '2nd Place (3 pts)', '3rd Place (2 pts)', '4th Place (0 pts)'].map((label, index) => (
           <div key={index}>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1">
               {label}
             </label>
             <select
               value={selectedPlayers[index]}
               onChange={(e) => handlePlayerChange(index, e.target.value)}
-              className="text-black w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="bg-[var(--card-bg)] text-[var(--text-primary)] w-full px-2 sm:px-3 py-2 text-sm sm:text-base border border-[var(--card-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]"
               disabled={loading}
             >
               <option value="">Select player...</option>
@@ -164,41 +164,41 @@ export default function MatchEntry({ players, onMatchSubmitted }: MatchEntryProp
           </div>
         ))}
 
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
           <button
             onClick={submitMatch}
             disabled={loading || selectedPlayers.some(id => !id)}
-            className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="flex-1 bg-[var(--accent-blue)] text-white py-2 px-3 sm:px-4 text-sm sm:text-base rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
           >
             {loading ? 'Submitting...' : 'Submit Match'}
           </button>
           
           <button
             onClick={() => setShowAddPlayer(!showAddPlayer)}
-            className="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"
+            className="bg-[var(--accent-green)] text-white py-2 px-3 sm:px-4 text-sm sm:text-base rounded-md hover:bg-green-700 mt-2 sm:mt-0"
           >
             Add Player
           </button>
         </div>
 
         {showAddPlayer && (
-          <div className="border-t pt-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+          <div className="border-t border-[var(--card-border)] pt-3 sm:pt-4 mt-3 sm:mt-4">
+            <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1">
               New Player Name
             </label>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <input
                 type="text"
                 value={newPlayerName}
                 onChange={(e) => setNewPlayerName(e.target.value)}
                 placeholder="Enter player name"
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="flex-1 px-3 py-2 text-sm sm:text-base border border-[var(--card-border)] bg-[var(--card-bg)] text-[var(--text-primary)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--accent-green)]"
                 onKeyPress={(e) => e.key === 'Enter' && addNewPlayer()}
               />
               <button
                 onClick={addNewPlayer}
                 disabled={!newPlayerName.trim()}
-                className="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 disabled:bg-gray-400"
+                className="bg-[var(--accent-green)] text-white py-2 px-4 text-sm sm:text-base rounded-md hover:bg-green-700 disabled:bg-gray-400"
               >
                 Add
               </button>
