@@ -11,7 +11,6 @@ export default function Home() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [matches, setMatches] = useState<MatchWithResults[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isSupabaseConfigured, setIsSupabaseConfigured] = useState(false);
 
   useEffect(() => {
     checkSupabaseConnection();
@@ -21,10 +20,8 @@ export default function Home() {
     try {
       // Try to fetch data to test connection
       await fetchData();
-      setIsSupabaseConfigured(true);
     } catch (error) {
       console.error("Supabase connection error:", error);
-      setIsSupabaseConfigured(false);
     } finally {
       setLoading(false);
     }
