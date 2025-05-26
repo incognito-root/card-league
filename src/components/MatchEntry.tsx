@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { Player } from '@/types/database'
+import { useAdmin } from './AdminContext'
+import AdminLogin from './AdminLogin'
 
 interface MatchEntryProps {
   players: Player[]
@@ -12,6 +14,7 @@ interface MatchEntryProps {
 const POINT_VALUES = [5, 3, 2, 0] // 1st, 2nd, 3rd, 4th place points
 
 export default function MatchEntry({ players, onMatchSubmitted }: MatchEntryProps) {
+  const { isLoggedIn, logout } = useAdmin()
   const [selectedPlayers, setSelectedPlayers] = useState<string[]>(['', '', '', ''])
   const [loading, setLoading] = useState(false)
   const [newPlayerName, setNewPlayerName] = useState('')
@@ -138,9 +141,21 @@ export default function MatchEntry({ players, onMatchSubmitted }: MatchEntryProp
     )
   }
 
+  if (!isLoggedIn) {
+    return <AdminLogin />
+  }
+  
   return (
     <div className="bg-[var(--card-bg)] rounded-lg shadow-md p-4 sm:p-6 border border-[var(--card-border)]">
-      <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)] mb-3 sm:mb-4">Record Match Result</h2>
+      <div className="flex justify-between items-center mb-3 sm:mb-4">
+        <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)]">Record Match Result</h2>
+        <button 
+          onClick={logout}
+          className="text-xs py-1 px-2 border border-[var(--card-border)] rounded text-[var(--text-secondary)] hover:bg-[var(--hover-bg)]"
+        >
+          Logout
+        </button>
+      </div>
       
       <div className="space-y-3 sm:space-y-4">
         {['1st Place (5 pts)', '2nd Place (3 pts)', '3rd Place (2 pts)', '4th Place (0 pts)'].map((label, index) => (

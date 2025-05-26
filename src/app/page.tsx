@@ -7,6 +7,7 @@ import LeagueTable from "@/components/LeagueTable";
 import MatchEntry from "@/components/MatchEntry";
 import MatchHistory from "@/components/MatchHistory";
 import ThemeToggle from "@/components/ThemeToggle";
+import { AdminProvider } from "@/components/AdminContext";
 
 export default function Home() {
   const [players, setPlayers] = useState<Player[]>([]);
@@ -75,19 +76,20 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--background)]">
-      <div className="container mx-auto px-4 py-4 sm:py-8">
-        <header className="text-center mb-6 sm:mb-8 relative">
-          <div className="absolute right-0 top-0">
-            <ThemeToggle />
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-[var(--text-primary)] mb-2">
-            Card Game League
-          </h1>
-          <p className="text-[var(--text-secondary)]">
-            Track your game results and see who&apos;s leading!
-          </p>
-        </header>
+    <AdminProvider>
+      <div className="min-h-screen bg-[var(--background)]">
+        <div className="container mx-auto px-4 py-4 sm:py-8">
+          <header className="text-center mb-6 sm:mb-8 relative">
+            <div className="absolute right-0 top-0">
+              <ThemeToggle />
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-bold text-[var(--text-primary)] mb-2">
+              Card Game League
+            </h1>
+            <p className="text-[var(--text-secondary)]">
+              Track your game results and see who&apos;s leading!
+            </p>
+          </header>
 
         <div className="grid gap-4 sm:gap-6 md:gap-8 grid-cols-1 md:grid-cols-2">
           {/* League Table */}
@@ -110,5 +112,6 @@ export default function Home() {
         </div>
       </div>
     </div>
+    </AdminProvider>
   );
 }
